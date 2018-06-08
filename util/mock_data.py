@@ -64,3 +64,16 @@ prices = {
         'description': u'Need to find a good Python tutorial on the web',
         'done': False}]
 }
+
+def make_up(price):
+    prices = {
+        'limit': 1000,
+        'subscribed': [],
+        'others': [{
+            'id': price[0],
+            'title': str(price[1]),
+            "thumbnail": str(price[2]),
+            'description': str(price[3]),
+            'done': False}]
+    }
+    return str(prices)

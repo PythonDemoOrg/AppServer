@@ -29,6 +29,16 @@ def connect():
         status=1
     return status
 
+def price_insert_sql(table_name,id,title,thumbnail,description,done):
+    c = g.db.cursor()
+    sql ="insert into %s (title,thumbnail,description) VALUES (\'%s\',\'%s\',\'%s\')" % (table_name,title,thumbnail,description)
+    c.execute(sql)
+
+def price_content_insert_sql(id,content):
+    c = g.db.cursor()
+    sql ="insert into price (id,content) VALUES ('%s','%s')" % (id,content)
+    c.execute(sql)
+
 def select_latest_price_sql():
     c = g.db.cursor()
     sql ="select * from price order by id DESC limit 1"
@@ -36,22 +46,26 @@ def select_latest_price_sql():
     price=c.fetchone()
     return price
 
+def select_price_by_page_sql(page):
+    c = g.db.cursor()
+    sql ="select * from price where id <%s" %(page*10)
+    c.execute(sql)
+    prices=c.fetchone()
+    return prices
+
+def select_lastest_id_sql():
+    c = g.db.cursor()
+    sql ="select * from price order by id DESC limit 1"
+    c.execute(sql)
+    price=c.fetchone()
+    return price[0]
+
 def select_price_by_id_sql(priceid):
     c = g.db.cursor()
-    sql ="select * from price where priceid =%s" %(priceid)
+    sql ="select * from price where id =%s" %(priceid)
     c.execute(sql)
     price=c.fetchone()
     return str(price[2])
-
-def price_insert_sql(table_name,priceid,pricelist,date):
-    c = g.db.cursor()
-    sql ="insert into %s (priceid,pricelist,date) VALUES ('%s','%s','%s')" % (table_name,priceid,pricelist,date)
-    c.execute(sql)
-
-def price_content_insert_sql(priceid,content):
-    c = g.db.cursor()
-    sql ="insert into price_content(priceid,content) VALUES ('%s','%s')" % (priceid,content)
-    c.execute(sql)
 
 def delete_sql(table_name):
     c = g.db.cursor()

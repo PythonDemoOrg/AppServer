@@ -4,5 +4,8 @@
 # author by : WeiQi
 
 # restful api
-price_update='/api/v1.0/<string:type>/update'
-price_load_more='/api/v1.0/<string:type>/loadmore/<string:priceid>'
+add_price='/api/v1.0/price/add'
+delete_price='/api/v1.0/price/delete/<string:priceid>'
+update_price='/api/v1.0/<string:type>/update/<string:priceid>'
+get_price='/api/v1.0/price/get/<string:priceid>'
+load_more_price='/api/v1.0/<string:type>/loadmore/<string:page>'
