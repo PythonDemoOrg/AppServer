@@ -1,6 +1,7 @@
-from flask import Flask, jsonify
+# -*- coding: UTF-8 -*-
 
-app = Flask(__name__)
+# Filename : mock_data.py
+# author by : WeiQi
 
 # *limit: 1000
 # *subscribed: []
@@ -28,30 +29,3 @@ app = Flask(__name__)
 #            "description": "用技术的眼睛仔细看懂每一部动画和漫画", "id": 9, "name": "动漫日报"},
 #           {"color": 16046124, "thumbnail": "http://pic1.zhimg.com/bcf7d594f126e5ceb22691be32b2650a.jpg",
 #            "description": "关注体育，不吵架。", "id": 8, "name": "体育日报"}]
-
-tasks = {
-    'limit': 1000,
-    'subscribed': [],
-    'others': [{
-        'id': 1,
-        'title': u'Buy groceries',
-        "thumbnail": "http://pic3.zhimg.com/0e71e90fd6be47630399d63c58beebfc.jpg",
-        'description': u'Milk, Cheese, Pizza, Fruit, Tylenol',
-        'done': False},
-        {
-        'id': 2,
-        'title': u'Learn Python',
-        "thumbnail": "http://pic4.zhimg.com/2c38a96e84b5cc8331a901920a87ea71.jpg",
-        'description': u'Need to find a good Python tutorial on the web',
-        'done': False
-        }]
-}
-
-@app.route('/todo/api/v1.0/tasks', methods=['GET'])
-def get_tasks():
-    # return jsonify({'tasks': tasks})
-    return jsonify(tasks)
-
-if __name__ == '__main__':
-    # app.run(debug=True)
-    app.run(host='0.0.0.0', port=8080)
