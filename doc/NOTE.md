@@ -10,3 +10,6 @@
 
 3、
 
+
+## 参考资料
+1、[python flask 怎么默认访问地址是本机地址](https://zhidao.baidu.com/question/748885269341970012.html)   
