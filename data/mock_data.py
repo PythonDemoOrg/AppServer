@@ -65,19 +65,6 @@ prices = {
         'done': False}]
 }
 
-def make_up(price):
-    prices = {
-        'limit': 1000,
-        'subscribed': [],
-        'others': [{
-            'id': price[0],
-            'title': str(price[1]),
-            "thumbnail": str(price[2]),
-            'description': str(price[3]),
-            'done': False}]
-    }
-    return str(prices)
-
 class Bean():
     def __init__(self, name = ""):
         self.name = name

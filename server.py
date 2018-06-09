@@ -7,7 +7,7 @@ from util import sql_util
 from spider import price_spider
 from api import api
 from data import mock_data
-
+from data import handle_data
 from flask import Flask, jsonify, g
 
 app = Flask(__name__)
@@ -18,9 +18,9 @@ def add_price():
         bean= mock_data.Bean().mock_bean()
         sql_util.price_insert_sql('price', bean)
     except:
-        return "error"
+        return handle_error("error")
     price=get_latest_price('price')
-    return mock_data.make_up(price);
+    return handle_data.make_up(price);
 
 @app.route(api.delete_price, methods=['GET'])
 def delete_price():
@@ -39,13 +39,23 @@ def get_prices():
 def get_latest_price(type):
     if(type=='price') :
         latestprice = sql_util.select_latest_price_sql()
-    return latestprice
+        return latestprice
+    return handle_error('arg')
 
 @app.route(api.load_more_price, methods=['GET'])
 def load_more_prices(type,page):
      if(type=='price') :
          load_price = sql_util.select_price_by_page_sql(page)
-     return str(load_price)
+         return handle_data.add_header(load_price)
+     return handle_error('arg')
+
+@app.errorhandler(404)
+def handle_error(error):
+    if (error=='404'):
+        return '404'
+    if (error=='arg'):
+        return 'argument error!!!'
+    return 'server internal error!!!'
 
 @app.before_request
 def before_request():
@@ -53,13 +63,10 @@ def before_request():
     global pricedata
     pricedata= price_spider.Price()
 
-@app.errorhandler(404)
-def not_found(error):
-    return 'nodata'
-
 @app.teardown_request
 def teardown_request(exception):
-    if hasattr(g, 'db'): g.db.close()
+    if hasattr(g, 'db'):
+        g.db.close()
 
 if __name__ == '__main__':
     # app.run(debug=True)
