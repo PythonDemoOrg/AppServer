@@ -1,14 +1,15 @@
 # -*- coding: UTF-8 -*-
 
-# Filename : price.py
+# Filename : price_spider.py
 # author by : WeiQi
 
 import urllib
 import urllib.request
 import json
 import datetime
-from sqlutils import basesqlutil
-from util import third_party_api
+from util import sql_util
+from api import third_party_api
+
 
 class Price(object):
     def __init__(self):
@@ -58,7 +59,7 @@ class Price(object):
             try:
                 correctpirce.append(perpirce)
                 articlecontent=json.dumps(articlecontent).decode("unicode-escape")
-                basesqlutil.newscontent_insert_sql(priceid,articlecontent)
+                sql_util.newscontent_insert_sql(priceid, articlecontent)
             except:
                 continue
         return correctpirce
@@ -70,11 +71,11 @@ class Price(object):
         source=['268_price.json','270_price.json']
 
         for index in range(2):
-            self.price_url = third_party_api.priceapi%(date,source[index]);
+            self.price_url = third_party_api.priceapi % (date, source[index]);
             pricelist.extend(self.getperprice())
 
         pricelist=sorted(pricelist,key=lambda priceitem:priceitem['putdate'],reverse=True)
-        latestprice=basesqlutil.select_latest_price_sql()
+        latestprice= sql_util.select_latest_price_sql()
         if(latestprice is None) :
             pricejsonlist["nextId"]='0'
             indexofsame=2
@@ -88,7 +89,7 @@ class Price(object):
         pricejsonlist=json.dumps(pricejsonlist).decode("unicode-escape")
         if((indexofsame is not 0) and len(pricelist)>8) :
             try:
-                basesqlutil.price_insert_sql('price',str(pricelist[0]['articleId']),pricejsonlist,str(date))
+                sql_util.price_insert_sql('price', str(pricelist[0]['articleId']), pricejsonlist, str(date))
             except:
                 return "error"
         return str(pricejsonlist)

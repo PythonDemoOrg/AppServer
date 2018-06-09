@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-# Filename : basesqlutil.py
+# Filename : sql_util.py
 # author by : WeiQi
 
 from imp import reload
