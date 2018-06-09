@@ -7,24 +7,17 @@ from sqlutils import basesqlutil
 from spider import price
 from util import api
 from util import mock_data
+
 from flask import Flask, jsonify, g
 
 app = Flask(__name__)
 
 @app.route(api.add_price, methods=['GET'])
 def add_price():
-    id=basesqlutil.select_lastest_id_sql()
-    print(id)
     try:
-        id=id+1,
-        title='normal title'
-        thumbnail='http://pic4.zhimg.com/aa94e197491fb9c44d384c4747773810.jpg'
-        description='description not it'
-        done=0
-        basesqlutil.price_insert_sql('price', id,title,thumbnail,description,done)
-        print('price_insert_sql')
+        bean=mock_data.Bean().mock_bean()
+        basesqlutil.price_insert_sql('price',bean)
     except:
-        print('error')
         return "error"
     price=get_latest_price('price')
     return mock_data.make_up(price);

@@ -77,3 +77,27 @@ def make_up(price):
             'done': False}]
     }
     return str(prices)
+
+class Bean():
+    def __init__(self, name = ""):
+        self.name = name
+        self.data_dic = {}
+        self.index = -1
+
+    class struct():
+        def __init__(self, title, thumbnail, description, done):
+            self.title = title
+            self.thumbnail = thumbnail
+            self.description = description
+            self.done = done
+
+    def make_struct(self, title, thumbnail, description, done):
+        return self.struct(title, thumbnail, description, done)
+
+    def mock_bean(self):
+        title='Buy groceries'
+        thumbnail='http://pic3.zhimg.com/0e71e90fd6be47630399d63c58beebfc.jpg'
+        description='Milk, Cheese, Pizza, Fruit, Tylenol'
+        done=0
+        bean=Bean().make_struct(title,thumbnail,description,done)
+        return bean
